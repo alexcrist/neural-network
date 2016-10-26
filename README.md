@@ -5,9 +5,9 @@ Networks Demystified" - https://www.youtube.com/watch?v=bxe2T-V8XRs
 
 ---
 
-You will need numpy, scipy, and pyalgotrade for this project.
+You will need numpy and scipy for this project.
 
-To run the demo just type 'python networks.py'
+To run the demo just type 'python networks.py' in a console.
 
 ---
 
