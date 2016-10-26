@@ -7,7 +7,7 @@ Networks Demystified" - https://www.youtube.com/watch?v=bxe2T-V8XRs
 
 You will need numpy and scipy for this project.
 
-To run the demo just type 'python networks.py' in a console.
+To run the demo just type 'python demo.py' in a console.
 
 ---
 
