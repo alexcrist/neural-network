@@ -26,3 +26,4 @@ Restrictions and Problems:
 
 * To the best of my knowledge, it appears that input and output values must be
 fed in between 0 and 1.
+* Neural network can only handle fully numerical data.

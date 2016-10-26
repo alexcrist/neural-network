@@ -46,8 +46,9 @@ class NeuralNetwork(object):
     # Cost for a set of inputs and outputs
     def cost(self, X, Y):
         self.analyze(X)
-        cost = 0.5 * sum((Y - self.O)**2) / X.shape[0] + 0.5 * self.penalty * (np.sum(self.W1**2) + np.sum(self.W2**2))
-        return cost
+        cost1 = 0.5 * sum((Y - self.O)**2) / X.shape[0]
+        cost2 = 0.5 * self.penalty * (np.sum(self.W1**2) + np.sum(self.W2**2))
+        return cost1 + cost2
 
     # Cost derivative for a set of inputs and outputs
     def costDeriv(self, X, Y):
