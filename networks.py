@@ -22,6 +22,7 @@ class NeuralNetwork(object):
                     O           - "Output layer" matrix containing the values of nodes in the output
                                   layer after the sigmoid function is applied '''
 
+    # Creates a neural network
     def __init__(self, inputNodes, hiddenNodes, outputNodes, penalty):
         self.inputNodes = inputNodes
         self.hiddenNodes = hiddenNodes
@@ -44,14 +45,14 @@ class NeuralNetwork(object):
         # Apply the sigmoid function to the output nodes
         self.O = mh.sigmoid(self.OPT)
 
-    # Calculate the cost for a set of inputs and outputs
+    # Cost for a set of inputs and outputs
     def cost(self, X, Y):
         self.analyze(X)
         cost = 0.5 * sum((Y - self.O)**2) / X.shape[0] 
              + 0.5 * self.penalty * (np.sum(self.W1**2) + np.sum(self.W2**2))
         return cost
 
-#
+    # Cost derivative for a set of inputs and outputs
     def costDeriv(self, X, Y):
         self.analyze(X)
 
@@ -63,13 +64,16 @@ class NeuralNetwork(object):
 
         return dCdW1, dCdW2
 
+    # Cost gradient for a set of inputs and outputs
     def computeGradient(self, X, Y):
         dCdW1, dCdW2 = self.costDeriv(X, Y)
         return np.concatenate((dCdW1.ravel(), dCdW2.ravel()))
 
+    # Returns all weight matrices as one flat array
     def getWeights(self):
         return np.concatenate((self.W1.ravel(), self.W2.ravel()))
 
+    # Sets the weight matrices from one flat array
     def setWeights(self, weightArray):
         W1_start = 0
         W1_end = self.inputNodes * self.hiddenNodes
@@ -84,15 +88,18 @@ class Trainer(object):
 
         Attributes: network - a neural network model '''
 
+    # Creates a neural network trainer
     def __init__(self, network):
         self.network = network
 
+    # A wrapper method needed for optimize.minimize in the train method
     def costWrapper(self, weightArray, X, Y):
         self.network.setWeights(weightArray)
         cost = self.network.cost(X, Y)
         gradient = self.network.computeGradient(X, Y)
         return cost, gradient
 
+    # Train the network using the given input and output data
     def train(self, X, Y):
         self.X = X
         self.Y = Y
@@ -119,6 +126,7 @@ class NeuralNetworkHelper(object):
                     xMax    - max value of training input data
                     yMax    - max value of training output data '''
 
+    # Creates a neural network helper
     def __init__(self, trainX, trainY, penalty=0.0001):
         m, n = trainX.shape
         o, p = trainY.shape
@@ -146,6 +154,7 @@ class NeuralNetworkHelper(object):
 
         return output
 
+    # Gets the cost of a given penalty and a set of input and output data
     def getPenaltyCost(self, testX, testY, penalty):
         costSum = 0
         trials = 10
@@ -155,6 +164,7 @@ class NeuralNetworkHelper(object):
             costSum += np.sum(abs(output - testY))
         return costSum / trials
 
+    # Tunes the optimal penalty
     def tunePenalty(self, testX, testY, minPenalty=0.00001, maxPenalty=0.1, iterations=5):
         for i in range(iterations):
             costMinPenalty = self.getPenaltyCost(testX, testY, minPenalty)
