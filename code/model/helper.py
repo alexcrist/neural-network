@@ -13,7 +13,7 @@ class NeuralNetworkHelper(object):
                     yMax    - max value of training output data '''
 
     # Creates a neural network helper
-    def __init__(self, trainX, trainY, penalty=0.0001):
+    def __init__(self, trainX, trainY, penalty=0.00015):
         m, n = trainX.shape
         o, p = trainY.shape
 
@@ -40,30 +40,32 @@ class NeuralNetworkHelper(object):
 
         return output
 
-    # Gets the cost of a given penalty and a set of input and output data
-    def getPenaltyCost(self, testX, testY, penalty):
-        costSum = 0
-        trials = 10
-        for i in range(trials):
-            network = NeuralNetworkHelper(self.trainX, self.trainY, penalty=penalty)
-            output = network.analyze(testX)
-            costSum += np.sum(abs(output - testY))
-        return costSum / trials
+    # Given testing data, graph the expected output vs. the actual given output
+    def visualize(self, textX, testY):
+        calculated = self.analyze(textX)
+        actual = testY
+        diff = abs(calculated - actual)
+        avgError = round(self.getAvgError(calculated, actual), 2)
 
-    # Tunes the optimal penalty
-    def tunePenalty(self, testX, testY, minPenalty=0.00001, maxPenalty=0.1, iterations=5):
-        for i in range(iterations):
-            costMinPenalty = self.getPenaltyCost(testX, testY, minPenalty)
-            costMaxPenalty = self.getPenaltyCost(testX, testY, maxPenalty)
-            if costMinPenalty < costMaxPenalty:
-                maxPenalty = np.mean([minPenalty, maxPenalty])
-            else:
-                minPenalty = np.mean([minPenalty, maxPenalty])
-
-        optimalPenalty = np.mean([minPenalty, maxPenalty])
-
-        helper = NeuralNetworkHelper(self.trainX, self.trainY, penalty=optimalPenalty)
-        output = helper.analyze(testX)
-        plt.plot(abs(output - testY), label='analysis error')
-        plt.legend(loc='upper right')
+        plt.figure(figsize=(15, 7))
+        plt.plot(calculated, label='calculated')
+        plt.plot(actual, label='actual')
+        plt.plot(diff, label='difference')
+        plt.plot([], 'w', label='Avg. error: ' + str(avgError) + '%')
+        plt.legend()
         plt.show()
+
+    # Returns the average error between the given datasets.
+    def getAvgError(self, calculated, actual):
+        sum = 0
+        for i in range(len(calculated)):
+            calculatedVal = calculated[i][0]
+            actualVal = actual[i][0]
+            percentDiff = 100 * abs(actualVal - calculatedVal) / actualVal
+            sum += percentDiff
+        avgError = sum / len(calculated)
+        return avgError
+
+
+
+

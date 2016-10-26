@@ -1,5 +1,6 @@
 import numpy as np
-import model.mathHelper as mh
+from model.sigmoid import sigmoid
+from model.sigmoid import sigmoidDeriv
 
 class NeuralNetwork(object):
     ''' A neural network model with one hidden layer.
@@ -35,12 +36,12 @@ class NeuralNetwork(object):
         # Calculate the hidden nodes by taking the dot product of W1 and the input nodes
         self.HPT = np.dot(X, self.W1)
         # Apply the sigmoid function to the hidden nodes
-        self.H = mh.sigmoid(self.HPT)
+        self.H = sigmoid(self.HPT)
 
         # Calculate the output nodes by taking the dot product of W2 and the hidden nodes
         self.OPT = np.dot(self.H, self.W2)
         # Apply the sigmoid function to the output nodes
-        self.O = mh.sigmoid(self.OPT)
+        self.O = sigmoid(self.OPT)
 
     # Cost for a set of inputs and outputs
     def cost(self, X, Y):
@@ -52,8 +53,8 @@ class NeuralNetwork(object):
     def costDeriv(self, X, Y):
         self.analyze(X)
 
-        delta2 = np.multiply(-(Y - self.O), mh.sigmoidDeriv(self.OPT))
-        delta1 = np.dot(delta2, self.W2.T) * mh.sigmoidDeriv(self.HPT)
+        delta2 = np.multiply(-(Y - self.O), sigmoidDeriv(self.OPT))
+        delta1 = np.dot(delta2, self.W2.T) * sigmoidDeriv(self.HPT)
 
         dCdW1 = np.dot(X.T, delta1)/X.shape[0] + self.penalty * self.W1
         dCdW2 = np.dot(self.H.T, delta2)/X.shape[0] + self.penalty * self.W2
