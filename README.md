@@ -11,8 +11,6 @@ This project is contains:
 
 The core of the neural network and the trainer are modeled after the content from the tutorial, ["Neural Networks Demystified"](https://www.youtube.com/watch?v=bxe2T-V8XRs). I would definitely reccomend the series for getting started with neural networks!
 
----
-
 ## Demo
 
 You will need numpy and scipy to run this project.
@@ -31,10 +29,7 @@ The network trains itself using the first half of the data. The output column fo
 
 Using the second half of the input data, the network then attempts to make calculations for the output data. It then compares its guesses with the actual output data and displays them in that graph. You can see that in this trial, the network had an average error of 15.71%.
 
-[screenshot]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Visualization"
-
-
----
+[screenshot]: ./figure1.png "Visualization"
 
 ## About this neural network
 
@@ -45,9 +40,7 @@ for the neural networks model complexity which will help reduce overfitting.
 When the network is first made, all the connections' weights are set to random
 values between 0 and 1. To train the network, instantiate a Trainer object with
 the network to be trained as a parameter. Run Trainer.train() with valid input
-and output data to train the network.
-
----
+and output data to train the network
 
 ## Restrictions and problems
 
