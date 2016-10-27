@@ -42,15 +42,25 @@ class NeuralNetworkHelper(object):
 
     # Given testing data, graph the expected output vs. the actual given output
     def visualize(self, textX, testY):
-        calculated = self.analyze(textX)
+        # Arrays for actual outputs, calculated ouptus, and the difference
         actual = testY
+        calculated = self.analyze(textX)
         diff = abs(calculated - actual)
+
+        # Sort the three arrays by the values of the actual outputs
+        combined = sorted(zip(actual, calculated, diff))
+        actualSorted = [a for a, c, d in combined]
+        calculatedSorted = [c for a, c, d in combined]
+        diffSorted = [d for a, c, d in combined]
+
+        # Calculate the average error
         avgError = round(self.getAvgError(calculated, actual), 2)
 
+        # Plot the data
         plt.figure(figsize=(15, 7))
-        plt.plot(calculated, label='calculated')
-        plt.plot(actual, label='actual')
-        plt.plot(diff, label='difference')
+        plt.plot(actualSorted, label='actual')
+        plt.plot(calculatedSorted, label='calculated')
+        plt.plot(diffSorted, label='difference')
         plt.plot([], 'w', label='Avg. error: ' + str(avgError) + '%')
         plt.legend()
         plt.show()

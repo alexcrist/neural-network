@@ -27,9 +27,9 @@ The neural network has just pulled data from the /data/concrete.csv data file in
 
 The network trains itself using the first half of the data. The output column for this is the concrete's strength while the other columns serve as input fields.
 
-Using the second half of the input data, the network then attempts to make calculations for the output data. It then compares its guesses with the actual output data and displays them in that graph. You can see that in this trial, the network had an average error of 15.71%.
+Using the second half of the input data, the network then attempts to make calculations for the output data. It then compares its guesses with the actual output data and displays them in that graph. You can see that in this trial, the network had an average error of 16.23%.
 
-[screenshot]: ./figure1.png "Visualization"
+[screenshot]: ./figure_1.png "Visualization"
 
 ## About this neural network
 
